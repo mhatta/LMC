@@ -1245,7 +1245,7 @@ function processInput(){
 
     
     let logobj=document.getElementById("log-text");
-    logobj.value += "> EXECUTE:  Transferring input to accumulator: " + userInput + "\n";
+    logobj.value += "> 実行:  入力 " + userInput + " をアキュムレータへ転送\n";
     logobj.scrollTop = logobj.scrollHeight;
     accumulator = parseInt(userInput);
 
@@ -1278,7 +1278,7 @@ function processInput(){
     // ... if not, log and ignore
     //
     let logobj=document.getElementById("log-text");
-    logobj.value += "> Input fired, but processor not waiting: " + state + " - ignored\n";
+    logobj.value += "> 入力は実行されましたが、プロセッサは以下を待っていません: " + state + " - 無視されます\n";
     logobj.scrollTop = logobj.scrollHeight;
   }
 }
@@ -1329,29 +1329,29 @@ function printCode(){
 	// LMC Instruction Set
 	//
 	const opcodesLMC = [{mnemonic: "ADD", mc:"1xx", name: "Add", 
-			     description: "Add the contents of the given memory location to the accumulator"}, 
+			     description: "指定されたメモリ位置の内容をアキュムレータに加算する"}, 
 			    {mnemonic: "SUB", mc:"2xx", name: "Subtract", 
-			     description: "Subtract the contents of the given memory location from the accumulator"},
+			     description: "指定されたメモリ位置の内容をアキュムレータから減算する"},
 			    {mnemonic: "STA", mc:"3xx", name: "Store Accumulator", 
 			     description: "アキュムレータの値を指定されたメモリアドレスにコピーする。"},
 			    {mnemonic: "LDA", mc:"5xx", name: "Load Accumulator", 
-			     description: "Copy the value from the given memory location into the Accumulator"},
+			     description: "指定されたメモリ位置からアキュムレータに値をコピーする"},
 			    {mnemonic: "BRA", mc:"6xx", name: "Branch", 
-			     description: "Set the Program Counter to the given memory location"},
+			     description: "プログラムカウンタを指定されたメモリ位置に設定する"},
 			    {mnemonic: "BRZ", mc:"7xx", name: "Branch if Accumulator Zero", 
-			     description: "If the value in the Accumulator is zero,then set the Program Counter"
-					 +" to the given memory location"},
+			     description: "アキュムレータの値がゼロならば、プログラムカウンタ"
+					 +"の値を指定のメモリロケーションに設定する"},
 			    {mnemonic: "BRP", mc:"8xx", name: "Branch if Accumulator Positive", 
-			     description: "If the value in the Accumulator is positive, then set the Program"
-					 +" Counter to the given memory location"},
+			     description: "アキュムレータの値が正ならば、プログラム"
+					 +"カウンタの値を指定のメモリ位置に設定する"},
 			    {mnemonic: "INP", mc:"901", name: "Input", 
 			     description: "「入力」ボックスの値をアキュムレータにコピーする。"},
 			    {mnemonic: "OUT", mc:"902", name: "Output", 
-			     description: "Copy the value in the Accumulator to the 'Output' box"},
+			     description: "アキュムレータの値を「出力」ボックスにコピーする。"},
 			    {mnemonic: "DAT", mc:"xxx", name: "Data", 
 			     description: "Set the given memory location to the supplied value"},
 			    {mnemonic: "HLT", mc:"000", name: "End program", 
-			     description: "Instructs the processor to stop executing instructions"},
+			     description: "プロセッサに命令の実行を停止するように指示する"},
         ];
 
 
@@ -1589,7 +1589,7 @@ function fetchInstruction() {
       animateBus(ctx, 0);
 
       let logobj=document.getElementById("log-text");
-      logobj.value += "> フェッチ:  RAM からインストラクションを読み込み\n";
+      logobj.value += "> フェッチ:  RAM から命令を読み込み\n";
       logobj.scrollTop = logobj.scrollHeight;
     }
     memoryAddressRegister = formattedPC;
@@ -2079,13 +2079,13 @@ function executeInstruction() {
       if (settingSpeed != speeds.SUPERFAST) {
         animateBus(ctx, 11);
         let logobj=document.getElementById("log-text");
-        logobj.value += "> EXECUTE:  BRP: Branching as Accumulator is " + accumulator + "\n";
+        logobj.value += "> 実行:  BRP: アキュムレータの値は " + accumulator + " なので分岐\n";
         logobj.scrollTop = logobj.scrollHeight;
       }
     } else {
       if (settingSpeed != speeds.SUPERFAST) {
         var logobj=document.getElementById("log-text");
-        logobj.value += "> EXECUTE:  BRP: Not branching as Accumulator is " + accumulator + "\n";
+        logobj.value += "> EXECUTE:  BRP: アキュムレータの値は " + accumulator + " なので分岐せず\n";
         logobj.scrollTop = logobj.scrollHeight;
       }
     }
@@ -2114,7 +2114,7 @@ function executeInstruction() {
       outobj.scrollTop = outobj.scrollHeight;
 
       let logobj=document.getElementById("log-text");
-      logobj.value += "> 実行:  OUT: アキュムレータの値を出力へ移送\n";
+      logobj.value += "> 実行:  OUT: アキュムレータの値を出力へ転送\n";
       logobj.scrollTop = logobj.scrollHeight;
 
       // Update the Output Mailbox
@@ -2126,7 +2126,7 @@ function executeInstruction() {
 
   if (currentInstructionRegister == "000"){
     let logobj=document.getElementById("log-text");
-    logobj.value += "> 実行:  HALT インストラクションが見つかりました\n";
+    logobj.value += "> 実行:  HALT 命令が検出されました\n";
     allHalt();
   }
   
@@ -2216,7 +2216,7 @@ function writeMemory(addressString, data){
 
   if (settingSpeed != speeds.SUPERFAST) {
     let logobj=document.getElementById("log-text");
-    logobj.value += "> 実行:  メモリ " + addressString + ": に書き込み。内容: " + data + "\n";
+    logobj.value += "> 実行:  メモリアドレス " + addressString + ": に書き込み。内容: " + data + "\n";
     logobj.scrollTop = logobj.scrollHeight;
   }
 
@@ -2330,9 +2330,9 @@ function readMemory(addressString){
   if (settingSpeed != speeds.SUPERFAST) {
     let logobj=document.getElementById("log-text");
     if (execStage == executionStages.FETCH) {
-      logobj.value += ">    メモリ " + addressString + ": から読み込み。内容: " + memorycontentdata + "\n";
+      logobj.value += ">    メモリアドレス " + addressString + ": から読み込み。内容: " + memorycontentdata + "\n";
     } else {
-      logobj.value += "> EXECUTE:  Reading memory at " + addressString + ": Contents: " + memorycontentdata + "\n";
+      logobj.value += "> 実行:  メモリアドレス " + addressString + ": を読み込み。内容: " + memorycontentdata + "\n";
     }
     logobj.scrollTop = logobj.scrollHeight;
   }
@@ -2932,7 +2932,7 @@ function changeState(newState){
     case states.RUNNING.STOPPING:
       //  Will be followed by a transition to STOPPED when execution of the
       //  current instruction has completed.
-      newLabel="Stopping when the current instruction has completed";
+      newLabel="現在の命令が完了した時点で停止";
       document.getElementById("run-btn").disabled = true;
       document.getElementById("stop-btn").disabled = true;      
       document.getElementById("resume-btn").disabled = true;      
@@ -2940,7 +2940,7 @@ function changeState(newState){
       break;
 
     case states.STOPPED:
-      newLabel="Stopped";
+      newLabel="停止中";
       document.getElementById("run-btn").disabled = false;
       document.getElementById("stop-btn").disabled = true;      
       document.getElementById("resume-btn").disabled = false;      
@@ -2948,7 +2948,7 @@ function changeState(newState){
       break;
 
     case states.HALTED:
-      newLabel="Halted";
+      newLabel="停止中";
       document.getElementById("run-btn").disabled = false;
       document.getElementById("stop-btn").disabled = true;      
       document.getElementById("resume-btn").disabled = true;      
@@ -2956,7 +2956,7 @@ function changeState(newState){
       break;
 
     case states.RUNNING.ACTIVE:
-      newLabel="Running - active";
+      newLabel="実行中 - アクティヴ";
       document.getElementById("run-btn").disabled = true;
       document.getElementById("stop-btn").disabled = false;
       document.getElementById("resume-btn").disabled = true;      
@@ -3540,8 +3540,8 @@ function canvasHitCheck(x, y) {
     tooltipX += 20;
 
     if (y >= y1 && y <= y1+canvasInfo.regHeight) {
-      description = "Program Counter\nThe Program Counter contains the address of the next instruction to be fetched from memory.\nIf you watch carefully as a program is running, you will see that the PC immediately increments by one as soon as an instruction is read from Memory.\nThe Branching instructions ('BRA', 'BRZ', and 'BRP') can change the value in the PC, causing program execution to 'jump' to the new address in Memory.";
-      hitRegister = true;
+	description = "プログラムカウンタ（PC）\nプログラムカウンタには、次に命令がフェッチされる\nメモリのアドレスが格納されます。プログラムの実行を\n注意深く観察すると、命令がメモリから読み込まれると\nすぐに、PCが即座に1つ増加されることがわかります。\n分岐命令(「BRA」、「BRZ」および「BRP」)は、\nPCの値を変更し、プログラムの実行をメモリ内の\n新しいアドレスに「ジャンプ」させることができます。";
+	hitRegister = true;
     } else if (y >= y2 && y <= y2+canvasInfo.regHeight) {
       description = "Current Instruction Register\nThe Current Instruction Register contains the last instruction fetched from Memory via the MDR.  Before the instruction can be executed, it must be decoded into a set of signals by the DECODER component.";
       hitRegister = true;
