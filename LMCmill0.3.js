@@ -279,11 +279,11 @@ var blankmemorytabledata = [
 // Execution speeds - we also have the Next button which steps.
 //
 const speeds = {
-  SUPERSLOW: "<i class='fa-regular fa-hand'></i>  Explain Everything - around 2 seconds per cycle",
-  SLOW: "<i class='fa-solid fa-person-walking'></i>  Run Slow - about 1 second per cycle",
-  MEDIUM: "<i class='fa-solid fa-person-running'></i>  Run at Medium speed - about 0.5 seconds per cycle",
-  FAST: "<i class='fa-solid fa-bicycle'></i>  Run at Fast speed - about 0.25 seconds per cycle",
-  SUPERFAST: "<i class='fa-solid fa-rocket'></i>  Just Run!  About 0.1 seconds per cycle",
+    SUPERSLOW: "<i class='fa-regular fa-hand'></i>  全て説明 - 1サイクル約2秒",
+    SLOW: "<i class='fa-solid fa-person-walking'></i>  低速で実行 - 1サイクル約1秒",
+    MEDIUM: "<i class='fa-solid fa-person-running'></i>  中くらいのスピードで実行 - 1サイクル約0.5秒",
+    FAST: "<i class='fa-solid fa-bicycle'></i>  高速で実行 - 1サイクル約0.25秒",
+    SUPERFAST: "<i class='fa-solid fa-rocket'></i>  とにかく実行!  1サイクル約0.1秒",
 }
 
 
@@ -293,16 +293,16 @@ const speeds = {
 // (through to the end of execution) to support pause/resume/step.
 //
 const states = {
-  UNASSEMBLED: "Unassembled",
-  ASSEMBLED: "Assembled",
+  UNASSEMBLED: "未アセンブル",
+  ASSEMBLED: "アセンブル済み",
   RUNNING: {
-    "ACTIVE": "Active",
-    "BLOCKEDONINPUT": "Waiting for input",
-    "PAUSED": "Paused",
-    "STOPPING": "Stopping...",
+    "ACTIVE": "アクティヴ",
+    "BLOCKEDONINPUT": "入力待ち",
+    "PAUSED": "一時停止",
+    "STOPPING": "停止中...",
   },
-  STOPPED: "Stopped",
-  HALTED: "Halted",
+  STOPPED: "停止",
+  HALTED: "完全停止",
 }
 
 var stashedSettingSpeed = speeds.MEDIUM;
@@ -494,10 +494,10 @@ function filltable() {
     layout:"fitColumns", //fit columns to width of table (optional)
     columns:[ 
       {title:"", field:"active", formatter:"traffic", formatterParams:{min:1, max:3, color:["green", "orange", "red"]}, width:25, maxWidth:25, minWidth:25, hozAlign:"center", headerSort:false, download:false},
-      {title:"Line", field:"line", width:"10%", widthShrink:3, headerSort:false},
-      {title:"Label", field:"label", width:"20%", widthShrink:6, hozAlign:"left", editor:true, headerSort:false},
-      {title:"Operator", field:"operator", width:"30%", widthShrink:4, editor:true, headerSort:false},
-      {title:"Operand", field:"operand", width:"35%", widthShrink:6, editor:true, headerSort:false},
+      {title:"行", field:"line", width:"10%", widthShrink:3, headerSort:false},
+      {title:"ラベル", field:"label", width:"20%", widthShrink:6, hozAlign:"left", editor:true, headerSort:false},
+      {title:"オペレータ", field:"operator", width:"30%", widthShrink:4, editor:true, headerSort:false},
+      {title:"オペランド", field:"operand", width:"35%", widthShrink:6, editor:true, headerSort:false},
     ],
     selectable:1,
     keybindings:{
@@ -1325,107 +1325,107 @@ function printCode(){
 //}
 
 
-//
-// LMC Instruction Set
-//
-const opcodesLMC = [{mnemonic: "ADD", mc:"1xx", name: "Add", 
-                     description: "Add the contents of the given memory location to the accumulator"}, 
-                    {mnemonic: "SUB", mc:"2xx", name: "Subtract", 
-                     description: "Subtract the contents of the given memory location from the accumulator"},
-                    {mnemonic: "STA", mc:"3xx", name: "Store Accumulator", 
-                     description: "Copy the value in the Accumulator to the given memory address"},
-                    {mnemonic: "LDA", mc:"5xx", name: "Load Accumulator", 
-                     description: "Copy the value from the given memory location into the Accumulator"},
-                    {mnemonic: "BRA", mc:"6xx", name: "Branch", 
-                     description: "Set the Program Counter to the given memory location"},
-                    {mnemonic: "BRZ", mc:"7xx", name: "Branch if Accumulator Zero", 
-                     description: "If the value in the Accumulator is zero,then set the Program Counter"
-                       +" to the given memory location"},
-                    {mnemonic: "BRP", mc:"8xx", name: "Branch if Accumulator Positive", 
-                     description: "If the value in the Accumulator is positive, then set the Program"
-                       +" Counter to the given memory location"},
-                    {mnemonic: "INP", mc:"901", name: "Input", 
-                     description: "Copy the value from the 'Input' box into the Accumulator"},
-                    {mnemonic: "OUT", mc:"902", name: "Output", 
-                     description: "Copy the value in the Accumulator to the 'Output' box"},
-                    {mnemonic: "DAT", mc:"xxx", name: "Data", 
-                     description: "Set the given memory location to the supplied value"},
-                    {mnemonic: "HLT", mc:"000", name: "End program", 
-                     description: "Instructs the processor to stop executing instructions"},
-                   ];
+	//
+	// LMC Instruction Set
+	//
+	const opcodesLMC = [{mnemonic: "ADD", mc:"1xx", name: "Add", 
+			     description: "Add the contents of the given memory location to the accumulator"}, 
+			    {mnemonic: "SUB", mc:"2xx", name: "Subtract", 
+			     description: "Subtract the contents of the given memory location from the accumulator"},
+			    {mnemonic: "STA", mc:"3xx", name: "Store Accumulator", 
+			     description: "アキュムレータの値を指定されたメモリアドレスにコピーする。"},
+			    {mnemonic: "LDA", mc:"5xx", name: "Load Accumulator", 
+			     description: "Copy the value from the given memory location into the Accumulator"},
+			    {mnemonic: "BRA", mc:"6xx", name: "Branch", 
+			     description: "Set the Program Counter to the given memory location"},
+			    {mnemonic: "BRZ", mc:"7xx", name: "Branch if Accumulator Zero", 
+			     description: "If the value in the Accumulator is zero,then set the Program Counter"
+					 +" to the given memory location"},
+			    {mnemonic: "BRP", mc:"8xx", name: "Branch if Accumulator Positive", 
+			     description: "If the value in the Accumulator is positive, then set the Program"
+					 +" Counter to the given memory location"},
+			    {mnemonic: "INP", mc:"901", name: "Input", 
+			     description: "「入力」ボックスの値をアキュムレータにコピーする。"},
+			    {mnemonic: "OUT", mc:"902", name: "Output", 
+			     description: "Copy the value in the Accumulator to the 'Output' box"},
+			    {mnemonic: "DAT", mc:"xxx", name: "Data", 
+			     description: "Set the given memory location to the supplied value"},
+			    {mnemonic: "HLT", mc:"000", name: "End program", 
+			     description: "Instructs the processor to stop executing instructions"},
+        ];
 
 
-//
-// CAIE Instruction Set
-// machine code (mc below) should be interpreted as two hex digits
-//
-const opcodesCAIE = [{mnemonic: "END", mc:"00", name: "End program", 
-                     description: "Instructs the processor to stop executing instructions"},
-                     {mnemonic: "IN", mc:"12", name: "Input", 
-                     description: "Copy the value from the 'Input' box into the Accumulator"},
-                     {mnemonic: "LDM", mc:"22", name: "Load Accumulator", 
-                     description: "Load the number n to the accumulator.  Immediate addressing"}, 
-                     {mnemonic: "LDD", mc:"26", name: "Load Accumulator", 
-                     description: "Load the contents of the given memory location to the accumulator.  Direct addressing"},
-                     {mnemonic: "LDI", mc:"2A", name: "Load Accumulator", 
-                     description: "Use the contents of the given memory location as an addrees.  Load the contents of that address to the accumulator.  Indirect addressing"},
-                     {mnemonic: "LDX", mc:"2E", name: "Load Accumulator", 
-                     description: "Load the contents of the given memory location + the IX register to the accumulator.  Indexed addressing"},
-                     {mnemonic: "LDR", mc:"20", name: "Load Index Register", 
-                     description: "Load the number n to the index register.  Immediate addressing"},
-                     {mnemonic: "MOV", mc:"30", name: "Move Accumulator", 
-                     description: "Copy the contents of the accumulatorto the index register"},
-                     {mnemonic: "STO", mc:"31", name: "Store Accumulator", 
-                     description: "Copy the value in the Accumulator to the given memory address"},
-                     {mnemonic: "ADD", mc:"42", name: "Add to Accumulator", 
-                     description: "Add the value from the given memory location to the Accumulator.  Direct addressing"},
-                     {mnemonic: "ADD", mc:"46", name: "Add to Accumulator", 
-                     description: "Add the number n to the Accumulator.  Immediate addressing"},
-                     {mnemonic: "SUB", mc:"52", name: "Subtract from Accumulator", 
-                     description: "Subtract the value at the given memory location from the Accumulator.  Direct addressing"},
-                     {mnemonic: "SUB", mc:"56", name: "Subtract from Accumulator", 
-                     description: "Subtract the number n from the Accumulator.  Immediate addressing"},
-                     {mnemonic: "INC", mc:"60", name: "Add to Accumulator", 
-                     description: "Increment the value in the Accumulator"},
-                     {mnemonic: "INC", mc:"62", name: "Add to Index Register", 
-                     description: "Increment the value in the Index Register"},
-                     {mnemonic: "DEC", mc:"70", name: "Decrement the Accumulator", 
-                     description: "Increment the value in the Accumulator"},
-                     {mnemonic: "DEC", mc:"72", name: "Add to Index Register", 
-                     description: "Increment the value in the Index Register"},
-                     {mnemonic: "JMP", mc:"82", name: "Jump", 
-                     description: "Jump to the given memory location"},
-                     {mnemonic: "CMP", mc:"92", name: "Compare", 
-                     description: "Compare the contents of the Accumulator with the contents of the given memory address"},
-                     {mnemonic: "CMP", mc:"96", name: "Compare", 
-                     description: "Compare the contents of the Accumulator with the number n"},
-                     {mnemonic: "CMI", mc:"9A", name: "Compare", 
-                     description: "Compare the contents of the Accumulator with the contents of the given memory address, twice..."},
-                     {mnemonic: "JPE", mc:"A2", name: "Jump if equal", 
-                     description: "Jump to the given memory location if the previous Compare operation was True"},
-                     {mnemonic: "JPN", mc:"A3", name: "Jump if not equal", 
-                     description: "Jump to the given memory location if the previous compare operation was False"},
-                     {mnemonic: "OUT", mc:"B2", name: "Output", 
-                     description: "Copy the value in the Accumulator to the 'Output' box"},
-                     {mnemonic: "AND", mc:"C2", name: "Bitwise AND", 
-                     description: "Bitwise AND the value in the Accumulator with the value supplied"},
-                     {mnemonic: "AND", mc:"C6", name: "Bitwise AND", 
-                     description: "Bitwise AND the value in the Accumulator with the contents of the memory address supplied"},
-                     {mnemonic: "XOR", mc:"D2", name: "Bitwise XOR", 
-                     description: "Bitwise XOR the value in the Accumulator with the value supplied"},
-                     {mnemonic: "XOR", mc:"D6", name: "Bitwise XOR", 
-                     description: "Bitwise XOR the value in the Accumulator with the contents of the memory address supplied"},
-                     {mnemonic: "OR", mc:"E2", name: "Bitwise OR", 
-                     description: "Bitwise OR the value in the Accumulator with the value supplied"},
-                     {mnemonic: "OR", mc:"E6", name: "Bitwise OR", 
-                     description: "Bitwise OR the value in the Accumulator with the contents of the memory address  supplied"},
-                     {mnemonic: "LSL", mc:"F2", name: "Logical Shift Left", 
-                     description: "Shift the value in the Accumulator to the left n places"},
-                     {mnemonic: "LSR", mc:"F6", name: "Logical Shift Right", 
-                     description: "Shift the value in the Accumulator to the right n places"},
-                     {mnemonic: "DAT", mc:"None", name: "Data", 
-                     description: "Indicates a memory location holding data"},
-                   ];
+	//
+	// CAIE Instruction Set
+	// machine code (mc below) should be interpreted as two hex digits
+	//
+	const opcodesCAIE = [{mnemonic: "END", mc:"00", name: "End program", 
+			      description: "Instructs the processor to stop executing instructions"},
+			     {mnemonic: "IN", mc:"12", name: "Input", 
+			      description: "Copy the value from the 'Input' box into the Accumulator"},
+			     {mnemonic: "LDM", mc:"22", name: "Load Accumulator", 
+			      description: "Load the number n to the accumulator.  Immediate addressing"}, 
+			     {mnemonic: "LDD", mc:"26", name: "Load Accumulator", 
+			      description: "Load the contents of the given memory location to the accumulator.  Direct addressing"},
+			     {mnemonic: "LDI", mc:"2A", name: "Load Accumulator", 
+			      description: "Use the contents of the given memory location as an addrees.  Load the contents of that address to the accumulator.  Indirect addressing"},
+			     {mnemonic: "LDX", mc:"2E", name: "Load Accumulator", 
+			      description: "Load the contents of the given memory location + the IX register to the accumulator.  Indexed addressing"},
+			     {mnemonic: "LDR", mc:"20", name: "Load Index Register", 
+			      description: "Load the number n to the index register.  Immediate addressing"},
+			     {mnemonic: "MOV", mc:"30", name: "Move Accumulator", 
+			      description: "Copy the contents of the accumulatorto the index register"},
+			     {mnemonic: "STO", mc:"31", name: "Store Accumulator", 
+			      description: "Copy the value in the Accumulator to the given memory address"},
+			     {mnemonic: "ADD", mc:"42", name: "Add to Accumulator", 
+			      description: "Add the value from the given memory location to the Accumulator.  Direct addressing"},
+			     {mnemonic: "ADD", mc:"46", name: "Add to Accumulator", 
+			      description: "Add the number n to the Accumulator.  Immediate addressing"},
+			     {mnemonic: "SUB", mc:"52", name: "Subtract from Accumulator", 
+			      description: "Subtract the value at the given memory location from the Accumulator.  Direct addressing"},
+			     {mnemonic: "SUB", mc:"56", name: "Subtract from Accumulator", 
+			      description: "Subtract the number n from the Accumulator.  Immediate addressing"},
+			     {mnemonic: "INC", mc:"60", name: "Add to Accumulator", 
+			      description: "Increment the value in the Accumulator"},
+			     {mnemonic: "INC", mc:"62", name: "Add to Index Register", 
+			      description: "Increment the value in the Index Register"},
+			     {mnemonic: "DEC", mc:"70", name: "Decrement the Accumulator", 
+			      description: "Increment the value in the Accumulator"},
+			     {mnemonic: "DEC", mc:"72", name: "Add to Index Register", 
+			      description: "Increment the value in the Index Register"},
+			     {mnemonic: "JMP", mc:"82", name: "Jump", 
+			      description: "Jump to the given memory location"},
+			     {mnemonic: "CMP", mc:"92", name: "Compare", 
+			      description: "Compare the contents of the Accumulator with the contents of the given memory address"},
+			     {mnemonic: "CMP", mc:"96", name: "Compare", 
+			      description: "Compare the contents of the Accumulator with the number n"},
+			     {mnemonic: "CMI", mc:"9A", name: "Compare", 
+			      description: "Compare the contents of the Accumulator with the contents of the given memory address, twice..."},
+			     {mnemonic: "JPE", mc:"A2", name: "Jump if equal", 
+			      description: "Jump to the given memory location if the previous Compare operation was True"},
+			     {mnemonic: "JPN", mc:"A3", name: "Jump if not equal", 
+			      description: "Jump to the given memory location if the previous compare operation was False"},
+			     {mnemonic: "OUT", mc:"B2", name: "Output", 
+			      description: "Copy the value in the Accumulator to the 'Output' box"},
+			     {mnemonic: "AND", mc:"C2", name: "Bitwise AND", 
+			      description: "Bitwise AND the value in the Accumulator with the value supplied"},
+			     {mnemonic: "AND", mc:"C6", name: "Bitwise AND", 
+			      description: "Bitwise AND the value in the Accumulator with the contents of the memory address supplied"},
+			     {mnemonic: "XOR", mc:"D2", name: "Bitwise XOR", 
+			      description: "Bitwise XOR the value in the Accumulator with the value supplied"},
+			     {mnemonic: "XOR", mc:"D6", name: "Bitwise XOR", 
+			      description: "Bitwise XOR the value in the Accumulator with the contents of the memory address supplied"},
+			     {mnemonic: "OR", mc:"E2", name: "Bitwise OR", 
+			      description: "Bitwise OR the value in the Accumulator with the value supplied"},
+			     {mnemonic: "OR", mc:"E6", name: "Bitwise OR", 
+			      description: "Bitwise OR the value in the Accumulator with the contents of the memory address  supplied"},
+			     {mnemonic: "LSL", mc:"F2", name: "Logical Shift Left", 
+			      description: "Shift the value in the Accumulator to the left n places"},
+			     {mnemonic: "LSR", mc:"F6", name: "Logical Shift Right", 
+			      description: "Shift the value in the Accumulator to the right n places"},
+			     {mnemonic: "DAT", mc:"None", name: "Data", 
+			      description: "Indicates a memory location holding data"},
+        ];
 
 
 const symbolTable = [];
@@ -1471,7 +1471,7 @@ function runCode() {
   intervalHandle = setInterval(nextInstruction, getDelay());
   
   let logobj=document.getElementById("log-text");
-  logobj.value += "> Starting execution...\n";
+  logobj.value += "> 実行を開始...\n";
   logobj.scrollTop = logobj.scrollHeight;
 
   //
@@ -1589,7 +1589,7 @@ function fetchInstruction() {
       animateBus(ctx, 0);
 
       let logobj=document.getElementById("log-text");
-      logobj.value += "> FETCH:  Reading instruction from RAM\n";
+      logobj.value += "> フェッチ:  RAM からインストラクションを読み込み\n";
       logobj.scrollTop = logobj.scrollHeight;
     }
     memoryAddressRegister = formattedPC;
@@ -1777,7 +1777,7 @@ function decodeInstructionOCR() {
   }
 
   let logobj=document.getElementById("log-text");
-  logobj.value += "> DECODE:  " + currentInstructionRegister + " = " + instructionCode + ": " + instructionDetails + "\n";
+  logobj.value += "> デコード:  " + currentInstructionRegister + " = " + instructionCode + ": " + instructionDetails + "\n";
   logobj.scrollTop = logobj.scrollHeight;
 
   formattedPC = programCounter.toString().padStart(2, "0");
@@ -1956,7 +1956,7 @@ function decodeInstructionCAIE() {
   }
 
   let logobj=document.getElementById("log-text");
-  logobj.value += "> DECODE:  " + currentInstructionRegister + " = " + instructionCode + ": " + instructionDetails + "\n";
+  logobj.value += "> デコード:  " + currentInstructionRegister + " = " + instructionCode + ": " + instructionDetails + "\n";
   logobj.scrollTop = logobj.scrollHeight;
 
   formattedPC = programCounter.toString().padStart(2, "0");
@@ -2098,7 +2098,7 @@ function executeInstruction() {
     if (type == "01"){
 //      animateBus(ctx, 4);
       let logobj=document.getElementById("log-text");
-      logobj.value += "> EXECUTE:  Waiting for input (to accumulator)\n";
+      logobj.value += "> 実行:  （アキュムレータへの）入力を待っています\n";
       logobj.scrollTop = logobj.scrollHeight;
       let outobj=document.getElementById("input-text");
       outobj.value = "";
@@ -2114,7 +2114,7 @@ function executeInstruction() {
       outobj.scrollTop = outobj.scrollHeight;
 
       let logobj=document.getElementById("log-text");
-      logobj.value += "> EXECUTE:  OUT: Transferring value in Accumulator to Output\n";
+      logobj.value += "> 実行:  OUT: アキュムレータの値を出力へ移送\n";
       logobj.scrollTop = logobj.scrollHeight;
 
       // Update the Output Mailbox
@@ -2126,7 +2126,7 @@ function executeInstruction() {
 
   if (currentInstructionRegister == "000"){
     let logobj=document.getElementById("log-text");
-    logobj.value += "> EXECUTE:  HALT instruction found\n";
+    logobj.value += "> 実行:  HALT インストラクションが見つかりました\n";
     allHalt();
   }
   
@@ -2216,7 +2216,7 @@ function writeMemory(addressString, data){
 
   if (settingSpeed != speeds.SUPERFAST) {
     let logobj=document.getElementById("log-text");
-    logobj.value += "> EXECUTE:  Writing memory at " + addressString + ": Contents: " + data + "\n";
+    logobj.value += "> 実行:  メモリ " + addressString + ": に書き込み。内容: " + data + "\n";
     logobj.scrollTop = logobj.scrollHeight;
   }
 
@@ -2330,7 +2330,7 @@ function readMemory(addressString){
   if (settingSpeed != speeds.SUPERFAST) {
     let logobj=document.getElementById("log-text");
     if (execStage == executionStages.FETCH) {
-      logobj.value += ">    Reading memory at " + addressString + ": Contents: " + memorycontentdata + "\n";
+      logobj.value += ">    メモリ " + addressString + ": から読み込み。内容: " + memorycontentdata + "\n";
     } else {
       logobj.value += "> EXECUTE:  Reading memory at " + addressString + ": Contents: " + memorycontentdata + "\n";
     }
@@ -2380,7 +2380,7 @@ function assembleCodeLMC() {
   //
   var timestamp = new Date().toLocaleTimeString('en-GB', {hour: "numeric", minute: "numeric", second: "numeric"});
   var logobj=document.getElementById("log-text");
-  logobj.value = "> ASSEMBLY:  Started assembly at " + timestamp + "\n";
+  logobj.value = "> アセンブリ:  アセンブルを " + timestamp + " に開始\n";
 
   //
   // Clear out Symbol Table (in a memory-friendly way) and reset count
@@ -2439,7 +2439,7 @@ function assembleCodeLMC() {
       return;
     }
   }
-  logobj.value += "> ASSEMBLY:  Symbol table built\n";
+  logobj.value += "> アセンブリ:  シンボルテーブルを構築\n";
   logobj.scrollTop = logobj.scrollHeight;
 
   //
@@ -2584,7 +2584,7 @@ function assembleCodeLMC() {
   }
 
   var timestamp = new Date().toLocaleTimeString('en-GB', {hour: "numeric", minute: "numeric", second: "numeric"});
-  logobj.value += "> ASSEMBLY:  Assembly completed at " + timestamp + "\n";
+  logobj.value += "> アセンブリ:  アセンブルを " + timestamp + " に完了\n";
   logobj.scrollTop = logobj.scrollHeight;
   changeState(states.ASSEMBLED);
 
@@ -2922,7 +2922,7 @@ function changeState(newState){
       break;
 
     case states.ASSEMBLED:
-      newLabel="Assembled into memory";
+      newLabel="メモリにアセンブル";
       document.getElementById("run-btn").disabled = false;
       document.getElementById("next-btn").disabled = false;
       document.getElementById("resume-btn").disabled = true;      
@@ -2964,7 +2964,7 @@ function changeState(newState){
       break;
 
     case states.RUNNING.BLOCKEDONINPUT:
-      newLabel="Waiting for user input";
+      newLabel="ユーザの入力待ち";
       document.getElementById("stop-btn").disabled = true;
       document.getElementById("resume-btn").disabled = true;      
       document.getElementById("next-btn").disabled = true;      
@@ -3444,7 +3444,7 @@ function loadExample() {
 
   // Let the user know we're loading the example
   let logobj=document.getElementById("log-text");
-  logobj.value += "> Example selected\n";
+  logobj.value += "> サンプルが選択されました\n";
   logobj.scrollTop = logobj.scrollHeight;
 
 
@@ -3477,7 +3477,7 @@ function loadExample() {
 
       table1.setData(codetabledata)
       .then(function(){
-        logobj.value += "> data added to table\n";
+        logobj.value += "> データをテーブルに追加\n";
       })
       .catch(function(error){
         logobj.value += "> ERROR: " + error +"\n";

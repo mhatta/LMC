@@ -224,16 +224,16 @@ let settingSpeed = speeds.MEDIUM;
 // (through to the end of execution) to support pause/resume/step.
 //
 const states = {
-  UNASSEMBLED: "Unassembled",
-  ASSEMBLED: "Assembled",
+  UNASSEMBLED: "未アセンブル",
+  ASSEMBLED: "アセンブル済",
   RUNNING: {
-    "ACTIVE": "Active",
-    "BLOCKEDONINPUT": "Waiting for input",
-    "PAUSED": "Paused",
-    "STOPPING": "Stopping...",
+    "ACTIVE": "アクティヴ",
+    "BLOCKEDONINPUT": "入力待ち",
+    "PAUSED": "一時停止",
+    "STOPPING": "停止中...",
   },
-  STOPPED: "Stopped",
-  HALTED: "Halted",
+  STOPPED: "停止",
+  HALTED: "完全停止",
 }
 
 var stashedSettingSpeed = speeds.MEDIUM;
