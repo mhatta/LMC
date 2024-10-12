@@ -3587,8 +3587,8 @@ function canvasHitCheck(x, y) {
     tooltipX -= tooltipWidth + 20;
 
     if (y >= y1 && y <= y1+canvasInfo.regHeight) {
-      description = "Memory Address Register\nThe Memory Address Register holds an address for a Memory location which is about to be read from, or written to.  In a read operation (which could be fetching an instruction or reading data), the value at the memory address will be retrieved and placed in the MDR.  In a write operation (as part of an 'STA' instruction), the value in the MDR will be written to Memory at this address.";
-      hitRegister = true;
+	description = "メモリアドレス・レジスタ（Memory Address Register, MAR）\nメモリアドレス・レジスタは、読み取りまたは書き込みが\n行われようとしているメモリ位置のアドレスを保持します。\n読み出し操作（命令のフェッチやデータの読み出し）では\nメモリアドレスの値が取り出され、MDRに置かれます。\n書き込み操作（「STA」命令の一部として）では、MDRの値が\nこのアドレスのメモリに書き込まれます。";
+	hitRegister = true;
     } else if (y >= y2 && y <= y2+canvasInfo.regHeight) {
       description = "Memory Data Register\nThe Memory Data Register holds a value which has either been read from Memory, or which is about to be written to Memory.  It is important to note that this value can be either an instruction or data.  In the case of an instruction, this will always have been read from Memory as part of the Fetch-Execute-Decode cycle.  In the case of data, the value may have been read from memory (in an 'LDA', 'SUB' or 'ADD' instruction) or be written to Memory (in an 'STA' instruction).";
       hitRegister = true;
