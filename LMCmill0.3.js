@@ -2221,12 +2221,12 @@ function writeMemory(addressString, data){
   }
 
   if (address > 99){
-    console.log("Error - memory address out of range: " + addressString);
+    console.log("エラー - メモリアドレスが範囲外です: " + addressString);
     return;
   }
 
   if (address < 0){
-    console.log("Error - memory address out of range: " + addressString);
+    console.log("エラー - メモリアドレスが範囲外です: " + addressString);
     return;
   }
 
@@ -2380,7 +2380,7 @@ function assembleCodeLMC() {
   //
   var timestamp = new Date().toLocaleTimeString('en-GB', {hour: "numeric", minute: "numeric", second: "numeric"});
   var logobj=document.getElementById("log-text");
-  logobj.value = "> アセンブリ:  アセンブルを " + timestamp + " に開始\n";
+  logobj.value = "> アセンブラ:  アセンブルを " + timestamp + " に開始\n";
 
   //
   // Clear out Symbol Table (in a memory-friendly way) and reset count
@@ -2417,7 +2417,7 @@ function assembleCodeLMC() {
       //
       for (let s=0; s < symbolTable.length; s++) {
         if (symbolTable[s]['symbol'] == label) {
-          let errString = "> Error, line " + i + ": duplicate symbol: " + symbolTable[s]['symbol'] + "\n";
+          let errString = "> エラー, 行 " + i + ": duplicate symbol: " + symbolTable[s]['symbol'] + "\n";
           reportAssemblyError(i+1, errString);
           return;
         }
@@ -2434,12 +2434,12 @@ function assembleCodeLMC() {
     }
 
     if (!foundOpcode && operator != "") {
-      let errString = "> Error, line " + i + ": unrecognised opcode: " + currentLine['operator'] + "\n";
+      let errString = "> エラー, 行 " + i + ": 認識されないオペレータです: " + currentLine['operator'] + "\n";
       reportAssemblyError(i+1, errString);
       return;
     }
   }
-  logobj.value += "> アセンブリ:  シンボルテーブルを構築\n";
+  logobj.value += "> アセンブリ: シンボルテーブルを構築\n";
   logobj.scrollTop = logobj.scrollHeight;
 
   //
@@ -2630,7 +2630,7 @@ function reportAssemblyError(lineNo, errString){
   var logobj=document.getElementById("log-text");
 
   logobj.value += errString;
-  logobj.value += "> ASSEMBLY:  Assembly failed\n";
+  logobj.value += "> アセンブラ:  アセンブルに失敗\n";
   logobj.scrollTop = logobj.scrollHeight;
   table1.deselectRow();
   table1.selectRow(lineNo);
@@ -3543,16 +3543,16 @@ function canvasHitCheck(x, y) {
 	description = "プログラムカウンタ（PC）\nプログラムカウンタには、次に命令がフェッチされる\nメモリのアドレスが格納されます。プログラムの実行を\n注意深く観察すると、命令がメモリから読み込まれると\nすぐに、PCが即座に1つ増加されることがわかります。\n分岐命令(「BRA」、「BRZ」および「BRP」)は、\nPCの値を変更し、プログラムの実行をメモリ内の\n新しいアドレスに「ジャンプ」させることができます。";
 	hitRegister = true;
     } else if (y >= y2 && y <= y2+canvasInfo.regHeight) {
-      description = "Current Instruction Register\nThe Current Instruction Register contains the last instruction fetched from Memory via the MDR.  Before the instruction can be executed, it must be decoded into a set of signals by the DECODER component.";
-      hitRegister = true;
+	description = "カレント・インストラクション・レジスタ（CIR)\nカレント・インストラクション・レジスタには、MDRを介して\nメモリからフェッチされた最後の命令が格納されます。\n命令が実行される前に、DECODERコンポーネントによって\n一連の信号にデコードされる必要があります。";
+	hitRegister = true;
       tooltipY -= yoffset1;
     } else if (y >= y3 && y <= y3+canvasInfo.regHeight) {
-      description = "Decoder\nThe Decoder takes the instruction code from the CIR and turns it into a set of signals to control the execution of the instruction.";
-      hitRegister = true;
+	description = "デコーダ（DECODER）\nデコーダはCIRから命令コードを受け取り、\n命令の実行を制御するための信号セットに変換します。";
+	hitRegister = true;
       tooltipY -= yoffset2;
     } else if (y >= y4 && y <= y4+canvasInfo.regHeight) {
-      description = "Input\nThe 'mailbox' used to hold user input before it is moved to the Accumulator.  When an 'INP' instruction is executed, the user is prompted to enter a value which will be placed into this 'mailbox' and then moved into the Accumulator.";
-      hitRegister = true;
+	description = "入力（INPUT）\nアキュムレータに移動する前にユーザ入力を保持するための\n「メールボックス」です。「INP」命令が実行されると\nユーザはこの「メールボックス」に値を入力するよう求められ、\n入力した値はその後アキュムレータに格納されます。";
+	hitRegister = true;
       tooltipY -= yoffset3;
     }
 
@@ -3569,12 +3569,12 @@ function canvasHitCheck(x, y) {
     tooltipX -= tooltipWidth/2;
 
     if (y >= y3 && y <= y3+canvasInfo.regHeight) {
-      description = "Arithmetic and Logic Unit\nThe Arithmetic and Logic Unit is responsible for the 'ADD' and 'SUB' operations.  In a modern processor, the ALU would be much more complex of course, but the Little Man Computer instruction set only has these two arithmetic operations.";
-      hitRegister = true;
+	description = "算術論理演算ユニット（ALU）\n算術論理演算ユニットは、「ADD」と「SUB」の演算を担当する。\n現代のプロセッサではALUはもちろんもっと複雑ですが、\nLittle　Man　Computerの命令セットにはこの2つの算術演算しかありません。";
+	hitRegister = true;
       tooltipY -= yoffset2;
     } else if (y >= y4 && y <= y4+canvasInfo.regHeight) {
-      description = "Accumulator\nThe Accumulator normally holds the result of the latest operation carried out by the ALU, but a value can also be directly loaded into the Accumulator from Memory, using the 'LDA' instruction.  We can also write the current value of the Accumulator into Memory using the 'STA' instruction.  Finally, the Accumulator can be loaded from user input (the 'INP' instruction) or used as output to the user (the 'OUT' instruction).";
-      hitRegister = true;
+	description = "アキュムレータ(ACC)\n通常、アキュムレータにはALUで実行された最新の演算結果が\n格納されますが、「LDA」命令を使ってメモリから直接アキュムレータに\n値をロードすることもできます。また、「STA」命令を使ってアキュムレータの現在の値を\nメモリに書き込むこともできます。最後に、アキュムレータはユーザ入力からロードすることもできますし（「INP」命令）、\nユーザへの出力として使用することもできます（「OUT」命令）。 ";
+	hitRegister = true;
       tooltipY -= yoffset3;
     }
 
@@ -3587,19 +3587,19 @@ function canvasHitCheck(x, y) {
     tooltipX -= tooltipWidth + 20;
 
     if (y >= y1 && y <= y1+canvasInfo.regHeight) {
-	description = "メモリアドレス・レジスタ（Memory Address Register, MAR）\nメモリアドレス・レジスタは、読み取りまたは書き込みが\n行われようとしているメモリ位置のアドレスを保持します。\n読み出し操作（命令のフェッチやデータの読み出し）では\nメモリアドレスの値が取り出され、MDRに置かれます。\n書き込み操作（「STA」命令の一部として）では、MDRの値が\nこのアドレスのメモリに書き込まれます。";
+	description = "メモリアドレス・レジスタ（MAR）\nメモリアドレス・レジスタは、読み取りまたは書き込みが\n行われようとしているメモリ位置のアドレスを保持します。\n読み出し操作（命令のフェッチやデータの読み出し）では\nメモリアドレスの値が取り出され、MDRに置かれます。\n書き込み操作（「STA」命令の一部として）では、MDRの値が\nこのアドレスのメモリに書き込まれます。";
 	hitRegister = true;
     } else if (y >= y2 && y <= y2+canvasInfo.regHeight) {
-      description = "Memory Data Register\nThe Memory Data Register holds a value which has either been read from Memory, or which is about to be written to Memory.  It is important to note that this value can be either an instruction or data.  In the case of an instruction, this will always have been read from Memory as part of the Fetch-Execute-Decode cycle.  In the case of data, the value may have been read from memory (in an 'LDA', 'SUB' or 'ADD' instruction) or be written to Memory (in an 'STA' instruction).";
-      hitRegister = true;
+	description = "メモリ・データ・レジスタ(MDR)\nメモリ・データ・レジスタは、メモリから読み出された値、\nまたはメモリに書き込まれようとしている値を保持します。\nこの値は、命令またはデータのいずれかであることに\n注意することが重要です。命令の場合は、\nフェッチ-実行-デコードサイクルの一部として、\n常にメモリから読み出されます。\nデータの場合、値は（LDA命令、SUB命令、ADD命令で）\nメモリから読み出されることもあれば、（STA命令で）\nメモリに書き込まれることもあります。";
+	hitRegister = true;
       tooltipY -= yoffset1;
     } else if (y >= y3 && y <= y3+canvasInfo.regHeight) {
-      description = "Status Register\nThe Status Register is an important component in any modern processor.  When the ALU has completed an operation, the Status Register is updated with information about that operation.  In this simulator, only three bits are used: the Least Significant Bit (bit 0) is an overflow flag - if the result of an addition is greater than 999, or the result of a subtraction is less than -999, this flag will be set to 1.  Bit 1 is used to record whether the result of an operation is zero, and bit 2 is used to record whether the result of an operation is positive (zero or more).  Bits 1 and 2 are used in the 'BRZ' and 'BRP' operations.";
-      hitRegister = true;
+	description = "ステータス・レジスタ(SR)\nステータス・レジスタは、現代的なプロセッサにおいて重要な\nコンポーネントです。ALUが演算を完了すると、ステータス・レジスタは\nその演算に関する情報で更新されます。このシミュレータでは、\n3ビットだけが使われます。最下位ビット（ビット0）は\nオーバーフローフラグで、加算結果が999より大きいか、\n減算結果が-999より小さい場合、このフラグが1にセットされます。\nビット1は演算結果が0かどうかを記録するのに使用され、\nビット2は演算結果が正（0以上）かどうかを記録するのに使用されます。 ビット1とビット2は「BRZ」操作と「BRP」操作で使用されます。";
+	hitRegister = true;
       tooltipY -= yoffset2;
     } else if (y >= y4 && y <= y4+canvasInfo.regHeight) {
-      description = "Output\nThe 'mailbox' used to hold output from the Accumulator.  When an 'OUT' instruction is executed, the value currently held in the Accumulator is moved into this mailbox and then displayed to the user.";
-      hitRegister = true;
+	description = "出力（OUTPUT）\nアキュムレータからの出力を保持するための「メールボックス」です。\n「OUT」命令が実行されると、現在アキュムレータに保持されている値が\nこのメールボックスに移動され、ユーザに表示されます。";
+	hitRegister = true;
       tooltipY -= yoffset3;
     }
   }
